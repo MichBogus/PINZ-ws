@@ -1,8 +1,6 @@
 package application;
 
-import controller.HelloController;
-import database.TestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import controller.RegisterController;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import java.util.Arrays;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {HelloController.class})
+@ComponentScan(basePackageClasses = {RegisterController.class})
 public class RestApplication {
 
     public static void main(String[] args) {
