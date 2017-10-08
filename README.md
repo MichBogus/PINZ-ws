@@ -1,3 +1,3 @@
 # PINZ-ws
 
-![Screenshot](register_workflow.jpeg)
+![Register workflow](register_workflow.jpg)
