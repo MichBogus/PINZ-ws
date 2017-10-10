@@ -1,6 +1,6 @@
 # Travis CI status
 
-Travis: https://travis-ci.org/MichBogus/PINZ-ws/branches <br/>
+Travis: https://travis-ci.org/MichBogus/PINZ-ws/branches <br/> <br/>
 Master: ![Master status](https://travis-ci.org/MichBogus/PINZ-ws.svg?branch=master) <br/>
 Develop: ![Develop status](https://travis-ci.org/MichBogus/PINZ-ws.svg?branch=develop) <br/>
 
