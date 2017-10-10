@@ -2,8 +2,9 @@ package model.base
 
 import org.springframework.http.HttpStatus
 
-class BaseWebserviceResponse(val status: HttpStatus,
+open class BaseWebserviceResponse(val status: HttpStatus,
                              val wsCode: WSCode,
+                             val wsCodeValue: String,
                              val reason: String) {
 
     fun isOk() = wsCode == WSCode.OK

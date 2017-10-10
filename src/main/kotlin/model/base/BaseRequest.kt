@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus
 abstract class BaseRequest {
 
     open fun checkIfRequestIsValid(): BaseWebserviceResponse {
-        return BaseWebserviceResponse(HttpStatus.OK, WSCode.OK, "")
+        return BaseWebserviceResponse(HttpStatus.OK, WSCode.OK, WSCode.OK.code, "")
     }
 }

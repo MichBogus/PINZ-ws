@@ -15,15 +15,15 @@ class RegisterCompanyRequest(@JsonProperty("name") @NotNull val name: String,
 
     override fun checkIfRequestIsValid(): BaseWebserviceResponse {
         if (name.isNullOrEmpty()) {
-            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_COMPANY_NAME_INVALID.tag)
+            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_COMPANY_NAME_INVALID.tag)
         }
 
         if (address == null || address.isValid().not()) {
-            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_COMPANY_ADDRESS_INVALID.tag)
+            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_COMPANY_ADDRESS_INVALID.tag)
         }
 
         if (companyNip.isNullOrEmpty()) {
-            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_COMPANY_NIP_INVALID.tag)
+            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_COMPANY_NIP_INVALID.tag)
         }
 
         return super.checkIfRequestIsValid()

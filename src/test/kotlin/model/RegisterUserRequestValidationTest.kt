@@ -21,6 +21,7 @@ class RegisterUserRequestValidationTest(val expectedResponse: BaseWebserviceResp
         assertThat(response.reason).isEqualTo(expectedResponse.reason)
         assertThat(response.status).isEqualTo(expectedResponse.status)
         assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
+        assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
     }
 
     companion object {
@@ -28,12 +29,12 @@ class RegisterUserRequestValidationTest(val expectedResponse: BaseWebserviceResp
         @Parameterized.Parameters
         fun data(): Collection<Array<Any>> {
             return listOf(
-                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_USERNAME_INVALID.tag), RegisterUserRequest("", "", "", "", "")),
-                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_PASSWORD_INVALID.tag), RegisterUserRequest("1234", "abcddwadwadaw", "", "", "")),
-                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_COMPANY_ID_INVALID.tag), RegisterUserRequest("1234", "Abcddwadwadaw1", "", "", "")),
-                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_NAME_INVALID.tag), RegisterUserRequest("1234", "Abcddwadwadaw1", "1", "", "")),
-                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_LAST_NAME_INVALID.tag), RegisterUserRequest("1234", "Abcddwadwadaw1", "1", "1", "")),
-                    arrayOf(BaseWebserviceResponse(HttpStatus.OK, WSCode.OK, ""), RegisterUserRequest("1234", "Abcddwadwadaw1", "1", "1", "1"))
+                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_USERNAME_INVALID.tag), RegisterUserRequest("", "", "", "", "")),
+                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_PASSWORD_INVALID.tag), RegisterUserRequest("1234", "abcddwadwadaw", "", "", "")),
+                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_COMPANY_ID_INVALID.tag), RegisterUserRequest("1234", "Abcddwadwadaw1", "", "", "")),
+                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_NAME_INVALID.tag), RegisterUserRequest("1234", "Abcddwadwadaw1", "1", "", "")),
+                    arrayOf(BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_LAST_NAME_INVALID.tag), RegisterUserRequest("1234", "Abcddwadwadaw1", "1", "1", "")),
+                    arrayOf(BaseWebserviceResponse(HttpStatus.OK, WSCode.OK, WSCode.OK.code, ""), RegisterUserRequest("1234", "Abcddwadwadaw1", "1", "1", "1"))
             )
         }
     }

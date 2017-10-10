@@ -17,23 +17,23 @@ class RegisterUserRequest(@JsonProperty("username") @NotNull val username: Strin
 
     override fun checkIfRequestIsValid(): BaseWebserviceResponse {
         if (isUsernameValid(username).not()) {
-            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_USERNAME_INVALID.tag)
+            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_USERNAME_INVALID.tag)
         }
 
         if (isPasswordValid(password).not()) {
-            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_PASSWORD_INVALID.tag)
+            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_PASSWORD_INVALID.tag)
         }
 
         if (companyId.isNullOrEmpty()) {
-            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_COMPANY_ID_INVALID.tag)
+            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_COMPANY_ID_INVALID.tag)
         }
 
         if (name.isNullOrEmpty()) {
-            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_NAME_INVALID.tag)
+            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_NAME_INVALID.tag)
         }
 
         if (lastName.isNullOrEmpty()) {
-            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSString.REGISTER_USER_LAST_NAME_INVALID.tag)
+            return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_LAST_NAME_INVALID.tag)
         }
 
         return super.checkIfRequestIsValid()
