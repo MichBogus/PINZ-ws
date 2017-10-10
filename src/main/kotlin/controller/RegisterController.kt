@@ -7,19 +7,15 @@ import model.registerworkflow.RegisterCompanyRequest
 import model.registerworkflow.RegisterUserRequest
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
+import service.RegisterService
 import javax.validation.Valid
 
 @RestController
 @RequestMapping(value = "/register")
-class RegisterController: BaseController<BaseWebserviceResponse>() {
+class RegisterController(val registerService: RegisterService) : BaseController<BaseWebserviceResponse>(), RegisterControllerMappings {
 
-    @RequestMapping(value = "/registerUser",
-            method = arrayOf(RequestMethod.POST),
-            consumes = arrayOf("application/json"),
-            produces = arrayOf("application/json"))
-    fun registerUser(@Valid @RequestBody request: RegisterUserRequest): WSResponseEntity<BaseWebserviceResponse> {
+    override fun registerUser(@Valid @RequestBody request: RegisterUserRequest): WSResponseEntity<BaseWebserviceResponse> {
         val response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {
@@ -29,11 +25,7 @@ class RegisterController: BaseController<BaseWebserviceResponse>() {
         return super.returnResponse(response, response.status)
     }
 
-    @RequestMapping(value = "/registerCompany",
-            method = arrayOf(RequestMethod.POST),
-            consumes = arrayOf("application/json"),
-            produces = arrayOf("application/json"))
-    fun registerCompany(@Valid @RequestBody request: RegisterCompanyRequest): WSResponseEntity<BaseWebserviceResponse> {
+    override fun registerCompany(@Valid @RequestBody request: RegisterCompanyRequest): WSResponseEntity<BaseWebserviceResponse> {
         val response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {
