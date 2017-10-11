@@ -9,4 +9,8 @@ class CompanyServiceImpl(val companyRepository: CompanyRepository) : CompanyServ
 
     override fun getAllCompanies(): Iterable<Company> =
             companyRepository.findAll()
+
+    override fun getCompanyByCode(companyCode: String): Company
+            = companyRepository.findByCompanyCode(companyCode)
+
 }

@@ -1,8 +1,8 @@
 package service.register
 
 import model.entity.utils.EntityPropertyGenerator
-import model.workflow.RegisterCompanyRequest
-import model.workflow.RegisterUserRequest
+import model.workflow.request.RegisterCompanyRequest
+import model.workflow.request.RegisterUserRequest
 import org.springframework.stereotype.Service
 import repository.CompanyRepository
 import repository.UserRepository

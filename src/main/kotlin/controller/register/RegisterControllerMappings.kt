@@ -2,8 +2,8 @@ package controller.register
 
 import controller.base.WSResponseEntity
 import model.base.BaseWebserviceResponse
-import model.workflow.RegisterCompanyRequest
-import model.workflow.RegisterUserRequest
+import model.workflow.request.RegisterCompanyRequest
+import model.workflow.request.RegisterUserRequest
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod

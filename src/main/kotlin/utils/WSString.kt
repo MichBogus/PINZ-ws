@@ -12,4 +12,6 @@ enum class WSString(val tag: String) {
     REGISTER_COMPANY_ADDRESS_INVALID("Address is empty or invalid"),
     REGISTER_COMPANY_NIP_INVALID("Company NIP is empty or invalid"),
 
+    COMPANY_GET_BY_CODE_INVALID("Company code is empty or invalid")
+
 }

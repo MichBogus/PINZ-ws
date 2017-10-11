@@ -1,4 +1,4 @@
-package model.workflow
+package model.workflow.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import model.base.BaseRequest

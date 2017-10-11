@@ -1,7 +1,7 @@
 package service.register
 
-import model.workflow.RegisterCompanyRequest
-import model.workflow.RegisterUserRequest
+import model.workflow.request.RegisterCompanyRequest
+import model.workflow.request.RegisterUserRequest
 
 interface RegisterService {
 

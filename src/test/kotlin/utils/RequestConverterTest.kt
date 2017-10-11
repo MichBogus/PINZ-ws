@@ -1,7 +1,7 @@
 package utils
 
 import EntityFactory
-import model.workflow.RegisterUserRequest
+import model.workflow.request.RegisterUserRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test

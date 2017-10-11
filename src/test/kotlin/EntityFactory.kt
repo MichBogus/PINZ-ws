@@ -1,8 +1,8 @@
 import model.company.CompanyAddress
 import model.entity.Company
 import model.entity.User
-import model.workflow.RegisterCompanyRequest
-import model.workflow.RegisterUserRequest
+import model.workflow.request.RegisterCompanyRequest
+import model.workflow.request.RegisterUserRequest
 
 object EntityFactory {
 
