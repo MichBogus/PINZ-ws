@@ -1,8 +1,8 @@
 package repository
 
-import model.entity.User
+import model.entity.Company
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserRepository : CrudRepository<User, Long>
+interface CompanyRepository : CrudRepository<Company, Long>

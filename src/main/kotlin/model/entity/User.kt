@@ -5,16 +5,12 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "User")
-class UserEntity : Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long = 0
-    var username: String = ""
-    var password: String = ""
-    var companyCode: String = ""
-    var name: String = ""
-    var lastName: String = ""
+class User(@Id @GeneratedValue(strategy = GenerationType.AUTO) var id: Long = 0,
+           var username: String = "",
+           var password: String = "",
+           var companyCode: String = "",
+           var name: String = "",
+           var lastName: String = "") : Serializable {
 
     override fun toString(): String {
         return String.format(

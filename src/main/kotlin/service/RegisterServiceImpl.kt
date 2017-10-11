@@ -1,19 +1,26 @@
 package service
 
-import model.entity.UserEntity
-import repository.UserRepository
+import model.registerworkflow.RegisterCompanyRequest
+import model.registerworkflow.RegisterUserRequest
 import org.springframework.stereotype.Service
+import repository.CompanyRepository
+import repository.UserRepository
+import utils.RequestConverter
 
 @Service
-class RegisterServiceImpl(var userRepository: UserRepository) : RegisterService {
+class RegisterServiceImpl(val userRepository: UserRepository,
+                          val companyRepository: CompanyRepository,
+                          val converter: RequestConverter) : RegisterService {
 
-    override fun registerUser() {
-        userRepository.save(UserEntity().apply {
-            username = "123"
-            password = "1234"
-        })
+    override fun registerUser(request: RegisterUserRequest) {
+        userRepository.save(converter.convertRegisterUserRequestToEntity(request))
+    }
 
-        var user = userRepository.findOne(1)
-        var check = ""
+    override fun registerCompany(request: RegisterCompanyRequest) {
+
+    }
+
+    private fun generateCompanyCode() {
+
     }
 }

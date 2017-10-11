@@ -19,7 +19,7 @@ class RegisterController(val registerService: RegisterService) : BaseController<
         val response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {
-            registerService.registerUser()
+            registerService.registerUser(request)
         }
 
         return super.returnResponse(response, response.status)
@@ -29,7 +29,7 @@ class RegisterController(val registerService: RegisterService) : BaseController<
         val response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {
-            //TODO CREATE NEW COMPANY TO DB!
+            registerService.registerCompany(request)
         }
 
         return super.returnResponse(response, response.status)
