@@ -3,7 +3,7 @@ package model
 import model.base.BaseWebserviceResponse
 import model.base.WSCode
 import model.company.CompanyAddress
-import model.registerworkflow.RegisterCompanyRequest
+import model.workflow.RegisterCompanyRequest
 import org.assertj.core.api.Assertions
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,5 +1,8 @@
+import model.company.CompanyAddress
+import model.entity.Company
 import model.entity.User
-import model.registerworkflow.RegisterUserRequest
+import model.workflow.RegisterCompanyRequest
+import model.workflow.RegisterUserRequest
 
 object EntityFactory {
 
@@ -11,9 +14,21 @@ object EntityFactory {
         lastName = "testLastName"
     }
 
+    val company = Company().apply {
+        name = "test"
+        street = "testStreet"
+        streetNumber = "testStreetNumber"
+        city = "testCity"
+        companyNip = "testNip"
+    }
+
     val registerUserRequest = RegisterUserRequest("test",
             "testPass",
             "testCode",
             "testName",
             "testLastName")
+
+    val registerCompanyRequest = RegisterCompanyRequest("test",
+            CompanyAddress("testStreet", "testStreetNumber", "testCity"),
+            "testNip")
 }

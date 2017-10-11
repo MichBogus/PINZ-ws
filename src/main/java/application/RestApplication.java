@@ -1,8 +1,10 @@
 package application;
 
-import controller.RegisterController;
+import controller.company.CompanyController;
+import controller.register.RegisterController;
 import model.entity.Company;
 import model.entity.User;
+import model.entity.utils.EntityPropertyGeneratorImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,16 +15,20 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import repository.CompanyRepository;
 import repository.UserRepository;
-import service.RegisterServiceImpl;
-import utils.RequestConverterImpl;
+import service.company.CompanyServiceImpl;
+import service.register.RegisterServiceImpl;
+import utils.converter.RequestConverterImpl;
 
 import java.util.Arrays;
 
 @SpringBootApplication
+
 @ComponentScan(basePackageClasses = {
         RegisterController.class, RegisterServiceImpl.class,
-        RequestConverterImpl.class,
+        CompanyController.class, CompanyServiceImpl.class,
+        RequestConverterImpl.class, EntityPropertyGeneratorImpl.class,
         UserRepository.class, CompanyRepository.class})
+
 @EnableJpaRepositories(basePackages = "repository", considerNestedRepositories = true)
 @EntityScan(basePackageClasses = {User.class, Company.class})
 public class RestApplication {

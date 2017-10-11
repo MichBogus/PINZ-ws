@@ -2,7 +2,7 @@ package model
 
 import model.base.BaseWebserviceResponse
 import model.base.WSCode
-import model.registerworkflow.RegisterUserRequest
+import model.workflow.RegisterUserRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
