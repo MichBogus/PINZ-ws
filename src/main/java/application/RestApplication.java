@@ -1,18 +1,26 @@
 package application;
 
 import controller.RegisterController;
+import model.entity.UserEntity;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import repository.UserRepository;
 import service.RegisterServiceImpl;
 
 import java.util.Arrays;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {RegisterController.class, RegisterServiceImpl.class})
+@ComponentScan(basePackageClasses = {
+        RegisterController.class, RegisterServiceImpl.class,
+        UserRepository.class})
+@EnableJpaRepositories(basePackages = "repository", considerNestedRepositories = true)
+@EntityScan(basePackageClasses = {UserEntity.class})
 public class RestApplication {
 
     public static void main(String[] args) {

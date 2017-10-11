@@ -19,7 +19,7 @@ class RegisterController(val registerService: RegisterService) : BaseController<
         val response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {
-            //TODO CREATE NEW USER TO DB!
+            registerService.registerUser()
         }
 
         return super.returnResponse(response, response.status)

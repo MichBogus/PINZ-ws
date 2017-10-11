@@ -11,7 +11,7 @@ import utils.WSString
 
 class RegisterUserRequest(@JsonProperty("username") @NotNull val username: String,
                           @JsonProperty("password") @NotNull val password: String,
-                          @JsonProperty("companyId") @NotNull val companyId: String,
+                          @JsonProperty("companyCode") @NotNull val companyCode: String,
                           @JsonProperty("name") @NotNull val name: String,
                           @JsonProperty("lastName") @NotNull val lastName: String) : BaseRequest() {
 
@@ -24,7 +24,7 @@ class RegisterUserRequest(@JsonProperty("username") @NotNull val username: Strin
             return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_PASSWORD_INVALID.tag)
         }
 
-        if (companyId.isNullOrEmpty()) {
+        if (companyCode.isNullOrEmpty()) {
             return BaseWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.REGISTER_USER_COMPANY_ID_INVALID.tag)
         }
 
