@@ -3,9 +3,9 @@ package controller.base
 import model.base.BaseWebserviceResponse
 import org.springframework.http.HttpStatus
 
-abstract class BaseController<R : BaseWebserviceResponse> {
+abstract class BaseController {
 
-    fun returnResponse(response: R, status: HttpStatus): WSResponseEntity<R> {
+    fun returnResponse(response: BaseWebserviceResponse, status: HttpStatus): WSResponseEntity {
         return WSResponseEntity(response, status)
     }
 }

@@ -15,11 +15,11 @@ interface RegisterControllerMappings {
             method = arrayOf(RequestMethod.POST),
             consumes = arrayOf("application/json"),
             produces = arrayOf("application/json"))
-    fun registerUser(@Valid @RequestBody request: RegisterUserRequest): WSResponseEntity<BaseWebserviceResponse>
+    fun registerUser(@Valid @RequestBody request: RegisterUserRequest): WSResponseEntity
 
     @RequestMapping(value = "/registerCompany",
             method = arrayOf(RequestMethod.POST),
             consumes = arrayOf("application/json"),
             produces = arrayOf("application/json"))
-    fun registerCompany(@Valid @RequestBody request: RegisterCompanyRequest): WSResponseEntity<BaseWebserviceResponse>
+    fun registerCompany(@Valid @RequestBody request: RegisterCompanyRequest): WSResponseEntity
 }

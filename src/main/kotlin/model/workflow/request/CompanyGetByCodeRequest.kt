@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull
 import org.springframework.http.HttpStatus
 import utils.WSString
 
-class CompanyGeyByCodeRequest(@JsonProperty("companyCode") @NotNull val companyCode: String) : BaseRequest() {
+class CompanyGetByCodeRequest(@JsonProperty("companyCode") @NotNull val companyCode: String) : BaseRequest() {
 
     override fun checkIfRequestIsValid(): BaseWebserviceResponse {
         if (companyCode.isNullOrEmpty()) {

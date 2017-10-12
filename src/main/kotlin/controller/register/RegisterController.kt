@@ -13,9 +13,9 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping(value = "/register")
-class RegisterController(val registerService: RegisterService) : BaseController<BaseWebserviceResponse>(), RegisterControllerMappings {
+class RegisterController(val registerService: RegisterService) : BaseController(), RegisterControllerMappings {
 
-    override fun registerUser(@Valid @RequestBody request: RegisterUserRequest): WSResponseEntity<BaseWebserviceResponse> {
+    override fun registerUser(@Valid @RequestBody request: RegisterUserRequest): WSResponseEntity {
         val response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {
@@ -25,7 +25,7 @@ class RegisterController(val registerService: RegisterService) : BaseController<
         return super.returnResponse(response, response.status)
     }
 
-    override fun registerCompany(@Valid @RequestBody request: RegisterCompanyRequest): WSResponseEntity<BaseWebserviceResponse> {
+    override fun registerCompany(@Valid @RequestBody request: RegisterCompanyRequest): WSResponseEntity {
         val response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {

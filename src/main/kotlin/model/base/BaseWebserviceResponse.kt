@@ -17,5 +17,7 @@ enum class WSCode(val code: String) {
     ERROR_MISSING_FIELD("100-02"),
 
     ERROR_WRONG_TYPE("200-01"),
-    ERROR_MISSING_TYPE("200-02")
+    ERROR_MISSING_TYPE("200-02"),
+
+    ERROR_DB_ITEM_DO_NOT_EXISTS("300-01")
 }
