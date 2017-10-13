@@ -1,6 +1,7 @@
 package application;
 
 import controller.company.CompanyController;
+import controller.login.LoginController;
 import controller.register.RegisterController;
 import model.entity.Company;
 import model.entity.User;
@@ -16,6 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import repository.CompanyRepository;
 import repository.UserRepository;
 import service.company.CompanyServiceImpl;
+import service.login.LoginServiceImpl;
 import service.register.RegisterServiceImpl;
 import utils.converter.RequestConverterImpl;
 
@@ -26,6 +28,7 @@ import java.util.Arrays;
 @ComponentScan(basePackageClasses = {
         RegisterController.class, RegisterServiceImpl.class,
         CompanyController.class, CompanyServiceImpl.class,
+        LoginController.class, LoginServiceImpl.class,
         RequestConverterImpl.class, EntityPropertyGeneratorImpl.class,
         UserRepository.class, CompanyRepository.class})
 
