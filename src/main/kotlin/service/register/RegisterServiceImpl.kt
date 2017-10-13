@@ -14,8 +14,14 @@ class RegisterServiceImpl(val userRepository: UserRepository,
                           val converter: RequestConverter,
                           val entityPropertyGenerator: EntityPropertyGenerator) : RegisterService {
 
-    override fun registerUser(request: RegisterUserRequest) {
-        userRepository.save(converter.convertRegisterUserRequestToEntity(request))
+    override fun registerUser(request: RegisterUserRequest): Boolean {
+        val userToBeRegistered = converter.convertRegisterUserRequestToEntity(request)
+
+        if (userRepository.findUserByUsername(userToBeRegistered.username) != null)
+            return false
+
+        userRepository.save(userToBeRegistered)
+        return true
     }
 
     override fun registerCompany(request: RegisterCompanyRequest) {

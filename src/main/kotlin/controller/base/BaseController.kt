@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus
 
 abstract class BaseController {
 
-    fun returnResponse(response: BaseWebserviceResponse, status: HttpStatus): WSResponseEntity {
+    fun generateResponseEntity(response: BaseWebserviceResponse, status: HttpStatus): WSResponseEntity {
         return WSResponseEntity(response, status)
     }
 }

@@ -5,6 +5,6 @@ import model.workflow.request.RegisterUserRequest
 
 interface RegisterService {
 
-    fun registerUser(request: RegisterUserRequest)
+    fun registerUser(request: RegisterUserRequest): Boolean
     fun registerCompany(request: RegisterCompanyRequest)
 }

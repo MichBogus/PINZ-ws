@@ -30,15 +30,29 @@ class RegisterServiceTest {
         val expectedUser = EntityFactory.user
         val expectedRequest = EntityFactory.registerUserRequest
 
+        whenever(mockOfUserRepository.findUserByUsername(any())).thenReturn(null)
         whenever(mockOfRequestConverter.convertRegisterUserRequestToEntity(expectedRequest)).thenReturn(expectedUser)
 
-        systemUnderTest.registerUser(expectedRequest)
+        val userRegistered = systemUnderTest.registerUser(expectedRequest)
 
-        verify(mockOfUserRepository).save(expectedUser)
         verify(mockOfRequestConverter).convertRegisterUserRequestToEntity(expectedRequest)
+        verify(mockOfUserRepository).save(expectedUser)
+        Assertions.assertThat(userRegistered).isTrue()
+    }
 
-        verifyNoMoreInteractions(mockOfUserRepository)
-        verifyNoMoreInteractions(mockOfRequestConverter)
+    @Test
+    fun shouldNotRegisterUserWhenHeAlreadyExists() {
+        val expectedUser = EntityFactory.user
+        val expectedRequest = EntityFactory.registerUserRequest
+
+        whenever(mockOfUserRepository.findUserByUsername(any())).thenReturn(expectedUser)
+        whenever(mockOfRequestConverter.convertRegisterUserRequestToEntity(expectedRequest)).thenReturn(expectedUser)
+
+        val userRegistered = systemUnderTest.registerUser(expectedRequest)
+
+        verify(mockOfRequestConverter).convertRegisterUserRequestToEntity(expectedRequest)
+        verify(mockOfUserRepository, never()).save(expectedUser)
+        Assertions.assertThat(userRegistered).isFalse()
     }
 
     @Test

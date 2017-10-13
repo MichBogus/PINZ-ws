@@ -3,6 +3,7 @@ package utils
 enum class WSString(val tag: String) {
 
     GENERIC_DB_NON_EXISTING_ITEM("There is no such element in the database"),
+    GENERIC_DB_USER_EXISTS("There is another user with such username in the database"),
 
     REGISTER_USER_USERNAME_INVALID("Username is empty or invalid"),
     REGISTER_USER_PASSWORD_INVALID("Password is empty or invalid (it should contains at least one number and minimum of 8 chars)"),

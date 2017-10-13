@@ -18,17 +18,20 @@ import javax.validation.Valid
 @RequestMapping(value = "/company")
 class CompanyController(val companyService: CompanyService) : BaseController(), CompanyControllerMappings {
 
-    override fun getAllCompanies(): WSResponseEntity
-            = returnResponse(generateResponse(companyService.getAllCompanies()), HttpStatus.OK)
+    override fun getAllCompanies(): WSResponseEntity {
+        val response = generateResponse(companyService.getAllCompanies())
+        return generateResponseEntity(response, response.status)
+    }
 
     override fun getCompanyByCode(@Valid @RequestBody request: CompanyGetByCodeRequest): WSResponseEntity {
-        val response = request.checkIfRequestIsValid()
+        var response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {
-            returnResponse(generateResponse(companyService.getCompanyByCode(request.companyCode)), HttpStatus.OK)
+            response = generateResponse(companyService.getCompanyByCode(request.companyCode))
+            return generateResponseEntity(response, response.status)
         }
 
-        return returnResponse(response as CompanyWebserviceResponse, response.status)
+        return generateResponseEntity(response, response.status)
     }
 
     private fun generateResponse(companyList: Iterable<Company>?) =

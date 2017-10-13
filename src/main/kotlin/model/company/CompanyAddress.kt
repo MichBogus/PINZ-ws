@@ -9,4 +9,9 @@ class CompanyAddress(@JsonProperty("street") val street: String,
 
     override fun isValid(): Boolean =
             street.isNullOrEmpty().not() && streetNumber.isNullOrEmpty().not() && city.isNullOrEmpty().not()
+
+    override fun toString(): String =
+            String.format(
+                    "{street='%s', streetNumber='%s', city='%s'}",
+                    street, streetNumber, city)
 }
