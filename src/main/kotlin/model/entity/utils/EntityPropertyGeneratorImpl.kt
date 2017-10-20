@@ -1,6 +1,8 @@
 package model.entity.utils
 
+import javafx.util.converter.LocalDateStringConverter
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 import java.util.*
 
 @Service
@@ -8,6 +10,7 @@ class EntityPropertyGeneratorImpl : EntityPropertyGenerator {
 
     companion object {
         private val COMPANY_CODE_CHARS = "ABCDEFGHIJKLMNOPQERSTUWVXYZ0123456789".toCharArray()
+        private val AUTHTOKEN_CHARS = "abcdefghijklmnopqerstuwvxyzABCDEFGHIJKLMNOPQERSTUWVXYZ0123456789".toCharArray()
     }
 
     override fun generateCompanyCode(): String {
@@ -16,5 +19,18 @@ class EntityPropertyGeneratorImpl : EntityPropertyGenerator {
             companyCode.append(COMPANY_CODE_CHARS[Random().nextInt(COMPANY_CODE_CHARS.size)])
         }
         return companyCode.toString()
+    }
+
+    override fun generateAuthToken(): String {
+        val companyCode = StringBuilder()
+        for (i in 0..32) {
+            companyCode.append(AUTHTOKEN_CHARS[Random().nextInt(AUTHTOKEN_CHARS.size)])
+        }
+        return companyCode.toString()
+    }
+
+    override fun getCurrentServerTime(): String {
+        val string = LocalDateStringConverter().toString(LocalDate.now())
+        return ""
     }
 }

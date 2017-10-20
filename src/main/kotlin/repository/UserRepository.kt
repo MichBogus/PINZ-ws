@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserRepository : CrudRepository<User, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.username = :#{#username}")
-    fun findUserByUsername(@Param("username") username: String): User?
+    @Query("FROM User u WHERE u.username = :#{#username}")
+    fun findUserByUsername(@Param("username") usernameParam: String): User?
 }

@@ -4,6 +4,7 @@ import controller.company.CompanyController;
 import controller.login.LoginController;
 import controller.register.RegisterController;
 import model.entity.Company;
+import model.entity.LoggedUser;
 import model.entity.User;
 import model.entity.utils.EntityPropertyGeneratorImpl;
 import org.springframework.boot.CommandLineRunner;
@@ -33,7 +34,7 @@ import java.util.Arrays;
         UserRepository.class, CompanyRepository.class})
 
 @EnableJpaRepositories(basePackages = "repository", considerNestedRepositories = true)
-@EntityScan(basePackageClasses = {User.class, Company.class})
+@EntityScan(basePackageClasses = {User.class, Company.class, LoggedUser.class})
 public class RestApplication {
 
     public static void main(String[] args) {
