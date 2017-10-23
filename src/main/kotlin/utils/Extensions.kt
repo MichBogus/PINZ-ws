@@ -1,8 +1,15 @@
 package utils
 
-fun <T> String.actionableEmpty(actionIfNotEmpty: (String) -> T, actionIfEmpty: () -> T): T =
+fun <T> String.actionableNotEmpty(actionIfNotEmpty: (String) -> T, actionIfEmpty: (String) -> T): T =
         if (this.isNotEmpty()) {
             actionIfNotEmpty.invoke(this)
         } else {
-            actionIfEmpty.invoke()
+            actionIfEmpty.invoke(this)
+        }
+
+fun <T> Boolean.actionableTrue(actionIfTrue: (Boolean) -> T, actionIfFalse: (Boolean) -> T): T =
+        if (this) {
+            actionIfTrue.invoke(this)
+        } else {
+            actionIfFalse.invoke(this)
         }

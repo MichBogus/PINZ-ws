@@ -13,5 +13,8 @@ interface ItemRepository : CrudRepository<Item, Long> {
     fun findItemByToken(@Param("itemToken") itemToken: String): Item?
 
     @Query("SELECT i FROM Item i WHERE i.userSignedToItemId = :#{#userId}")
-    fun findItesByUserId(@Param("userId") userId: Long): List<Item>?
+    fun findItemsByUserId(@Param("userId") userId: Long): List<Item>?
+
+    @Query("SELECT i FROM Item i WHERE i.itemToken LIKE %:itemToken%")
+    fun findItemsIfTokenOccurs(@Param("itemToken") itemToken: String): List<Item>?
 }

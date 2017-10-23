@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 import repository.LoggedUserRepository
 import repository.UserRepository
 import utils.WSString
-import utils.actionableEmpty
+import utils.actionableNotEmpty
 
 @Service
 class LoginServiceImpl(val userRepository: UserRepository,
@@ -28,7 +28,7 @@ class LoginServiceImpl(val userRepository: UserRepository,
         if (userToBeLogged.password != password)
             return LoginUserWebserviceResponse(HttpStatus.BAD_REQUEST, WSCode.ERROR_WRONG_FIELD, WSCode.ERROR_WRONG_FIELD.code, WSString.LOGIN_PASSWORD_IS_NOT_CORRECT.tag)
 
-        return isUserIsCurrentlyLoggedIn(userToBeLogged).actionableEmpty(
+        return isUserIsCurrentlyLoggedIn(userToBeLogged).actionableNotEmpty(
                 { generateResponseWithAuthToken(it) },
                 { generateResponseWithAuthToken(loginNewUser(userToBeLogged)) })
     }
