@@ -1,17 +1,27 @@
 import model.company.CompanyAddress
 import model.entity.Company
+import model.entity.LoggedUser
 import model.entity.User
 import model.workflow.request.RegisterCompanyRequest
 import model.workflow.request.RegisterUserRequest
+import javax.jws.soap.SOAPBinding
 
 object EntityFactory {
 
     val user = User().apply {
+        id = 1
         username = "test"
         password = "testPass"
         companyCode = "testCode"
         name = "testName"
         lastName = "testLastName"
+    }
+
+    fun loggedUser(expectedAuthToken: String) = LoggedUser().apply {
+        id = 1
+        userId = 1
+        authToken = expectedAuthToken
+        timeStamp = "DATE"
     }
 
     val company = Company().apply {

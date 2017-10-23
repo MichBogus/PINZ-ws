@@ -4,6 +4,7 @@ import model.base.WSCode
 import model.entity.LoggedUser
 import model.entity.User
 import model.entity.utils.EntityPropertyGenerator
+import model.entity.utils.TimeStampValidator
 import model.workflow.response.LoginUserWebserviceResponse
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -15,7 +16,8 @@ import utils.actionableEmpty
 @Service
 class LoginServiceImpl(val userRepository: UserRepository,
                        val loggedUserRepository: LoggedUserRepository,
-                       val entityPropertyGenerator: EntityPropertyGenerator) : LoginService {
+                       val entityPropertyGenerator: EntityPropertyGenerator,
+                       val timeStampValidator: TimeStampValidator) : LoginService {
 
     override fun loginUser(username: String, password: String): LoginUserWebserviceResponse {
         val userToBeLogged = userRepository.findUserByUsername(username)
@@ -33,6 +35,11 @@ class LoginServiceImpl(val userRepository: UserRepository,
 
     private fun isUserIsCurrentlyLoggedIn(userToBeLogged: User): String {
         loggedUserRepository.findLoggedUserByUserId(userToBeLogged.id)?.let { loggedUser ->
+            if (timeStampValidator.isTimeStampValid(loggedUser.timeStamp).not()) {
+                loggedUserRepository.delete(loggedUser)
+                return ""
+            }
+
             loggedUser.timeStamp = entityPropertyGenerator.getCurrentServerTime()
 
             loggedUserRepository.save(loggedUser)

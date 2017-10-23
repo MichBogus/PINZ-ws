@@ -1,8 +1,8 @@
 package model.entity.utils
 
-import javafx.util.converter.LocalDateStringConverter
+import javafx.util.converter.LocalDateTimeStringConverter
 import org.springframework.stereotype.Service
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 @Service
@@ -29,8 +29,5 @@ class EntityPropertyGeneratorImpl : EntityPropertyGenerator {
         return companyCode.toString()
     }
 
-    override fun getCurrentServerTime(): String {
-        val string = LocalDateStringConverter().toString(LocalDate.now())
-        return ""
-    }
+    override fun getCurrentServerTime(): String = LocalDateTimeStringConverter().toString(LocalDateTime.now())
 }

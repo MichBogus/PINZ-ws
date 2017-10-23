@@ -4,9 +4,11 @@ import controller.company.CompanyController;
 import controller.login.LoginController;
 import controller.register.RegisterController;
 import model.entity.Company;
+import model.entity.Item;
 import model.entity.LoggedUser;
 import model.entity.User;
 import model.entity.utils.EntityPropertyGeneratorImpl;
+import model.entity.utils.TimeStampValidatorImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,8 +17,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import repository.CompanyRepository;
-import repository.UserRepository;
 import service.company.CompanyServiceImpl;
 import service.login.LoginServiceImpl;
 import service.register.RegisterServiceImpl;
@@ -29,12 +29,11 @@ import java.util.Arrays;
 @ComponentScan(basePackageClasses = {
         RegisterController.class, RegisterServiceImpl.class,
         CompanyController.class, CompanyServiceImpl.class,
-        LoginController.class, LoginServiceImpl.class,
-        RequestConverterImpl.class, EntityPropertyGeneratorImpl.class,
-        UserRepository.class, CompanyRepository.class})
+        LoginController.class, LoginServiceImpl.class, TimeStampValidatorImpl.class,
+        RequestConverterImpl.class, EntityPropertyGeneratorImpl.class})
 
 @EnableJpaRepositories(basePackages = "repository", considerNestedRepositories = true)
-@EntityScan(basePackageClasses = {User.class, Company.class, LoggedUser.class})
+@EntityScan(basePackageClasses = {User.class, Company.class, LoggedUser.class, Item.class})
 public class RestApplication {
 
     public static void main(String[] args) {
