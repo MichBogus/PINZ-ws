@@ -1,6 +1,6 @@
 package service.token
 
-import workflow.model.entity.utils.TimeStampValidator
+import model.entity.utils.TimeStampValidator
 import org.springframework.stereotype.Service
 import repository.LoggedUserRepository
 

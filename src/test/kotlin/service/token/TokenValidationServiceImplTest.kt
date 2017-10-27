@@ -1,7 +1,7 @@
 package service.token
 
 import com.nhaarman.mockito_kotlin.mock
-import workflow.model.entity.utils.TimeStampValidator
+import model.entity.utils.TimeStampValidator
 import org.junit.Before
 import repository.LoggedUserRepository
 

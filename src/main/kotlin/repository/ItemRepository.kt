@@ -1,6 +1,6 @@
 package repository
 
-import workflow.model.entity.Item
+import model.entity.Item
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param

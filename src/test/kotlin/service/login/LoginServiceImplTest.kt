@@ -3,11 +3,11 @@ package service.login
 import EntityFactory
 import EntityFactory.loggedUser
 import com.nhaarman.mockito_kotlin.*
-import workflow.model.base.WSCode
-import workflow.model.entity.LoggedUser
-import workflow.model.entity.utils.EntityPropertyGenerator
-import workflow.model.entity.utils.TimeStampValidator
-import workflow.model.workflow.response.LoginUserWebserviceResponse
+import model.base.WSCode
+import model.entity.LoggedUser
+import model.entity.utils.EntityPropertyGenerator
+import model.entity.utils.TimeStampValidator
+import workflow.response.LoginUserWebserviceResponse
 import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test

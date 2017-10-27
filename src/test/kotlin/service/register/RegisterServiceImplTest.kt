@@ -2,7 +2,7 @@ package service.register
 
 import EntityFactory
 import com.nhaarman.mockito_kotlin.*
-import workflow.model.entity.utils.EntityPropertyGenerator
+import model.entity.utils.EntityPropertyGenerator
 import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test

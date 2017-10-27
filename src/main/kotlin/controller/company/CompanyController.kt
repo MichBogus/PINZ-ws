@@ -2,11 +2,11 @@ package controller.company
 
 import controller.base.BaseController
 import controller.base.WSResponseEntity
-import workflow.model.base.WSCode
-import workflow.model.entity.Company
-import workflow.model.workflow.request.CompanyGetByCodeRequest
-import workflow.model.workflow.response.CompanyListWebserviceResponse
-import workflow.model.workflow.response.CompanyWebserviceResponse
+import model.base.WSCode
+import model.entity.Company
+import workflow.request.CompanyGetByCodeRequest
+import workflow.response.CompanyListWebserviceResponse
+import workflow.response.CompanyWebserviceResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping

@@ -2,10 +2,10 @@ package controller.register
 
 import controller.base.BaseController
 import controller.base.WSResponseEntity
-import workflow.model.base.BaseWebserviceResponse
-import workflow.model.base.WSCode
-import workflow.model.workflow.request.RegisterCompanyRequest
-import workflow.model.workflow.request.RegisterUserRequest
+import model.base.BaseWebserviceResponse
+import model.base.WSCode
+import workflow.request.RegisterCompanyRequest
+import workflow.request.RegisterUserRequest
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping

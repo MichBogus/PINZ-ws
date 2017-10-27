@@ -1,6 +1,6 @@
 package controller.base
 
-import workflow.model.base.BaseWebserviceResponse
+import model.base.BaseWebserviceResponse
 import org.springframework.http.HttpStatus
 
 abstract class BaseController {

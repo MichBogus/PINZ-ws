@@ -1,9 +1,9 @@
 package utils.converter
 
-import workflow.model.entity.Company
-import workflow.model.entity.User
-import workflow.model.workflow.request.RegisterCompanyRequest
-import workflow.model.workflow.request.RegisterUserRequest
+import model.entity.Company
+import model.entity.User
+import workflow.request.RegisterCompanyRequest
+import workflow.request.RegisterUserRequest
 import org.springframework.stereotype.Service
 
 @Service

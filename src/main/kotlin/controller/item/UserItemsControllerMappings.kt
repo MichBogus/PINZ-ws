@@ -1,9 +1,9 @@
 package controller.item
 
 import controller.base.WSResponseEntity
-import workflow.model.workflow.request.AddItemRequest
-import workflow.model.workflow.request.DeleteItemRequest
-import workflow.model.workflow.request.LoginUserRequest
+import workflow.request.AddItemRequest
+import workflow.request.DeleteItemRequest
+import workflow.request.LoginUserRequest
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping

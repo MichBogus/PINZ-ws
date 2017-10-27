@@ -1,6 +1,6 @@
 package repository
 
-import workflow.model.entity.LoggedUser
+import model.entity.LoggedUser
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
