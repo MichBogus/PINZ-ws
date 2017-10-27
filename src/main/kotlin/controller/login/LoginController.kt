@@ -2,7 +2,7 @@ package controller.login
 
 import controller.base.BaseController
 import controller.base.WSResponseEntity
-import model.workflow.request.LoginUserRequest
+import workflow.model.workflow.request.LoginUserRequest
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

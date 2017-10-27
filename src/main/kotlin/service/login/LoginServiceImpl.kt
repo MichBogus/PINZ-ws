@@ -1,11 +1,11 @@
 package service.login
 
-import model.base.WSCode
-import model.entity.LoggedUser
-import model.entity.User
-import model.entity.utils.EntityPropertyGenerator
-import model.entity.utils.TimeStampValidator
-import model.workflow.response.LoginUserWebserviceResponse
+import workflow.model.base.WSCode
+import workflow.model.entity.LoggedUser
+import workflow.model.entity.User
+import workflow.model.entity.utils.EntityPropertyGenerator
+import workflow.model.entity.utils.TimeStampValidator
+import workflow.model.workflow.response.LoginUserWebserviceResponse
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import repository.LoggedUserRepository

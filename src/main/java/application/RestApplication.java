@@ -1,14 +1,15 @@
 package application;
 
 import controller.company.CompanyController;
+import controller.item.UserItemsController;
 import controller.login.LoginController;
 import controller.register.RegisterController;
-import model.entity.Company;
-import model.entity.Item;
-import model.entity.LoggedUser;
-import model.entity.User;
-import model.entity.utils.EntityPropertyGeneratorImpl;
-import model.entity.utils.TimeStampValidatorImpl;
+import workflow.model.entity.Company;
+import workflow.model.entity.Item;
+import workflow.model.entity.LoggedUser;
+import workflow.model.entity.User;
+import workflow.model.entity.utils.EntityPropertyGeneratorImpl;
+import workflow.model.entity.utils.TimeStampValidatorImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,8 +19,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import service.company.CompanyServiceImpl;
+import service.item.ItemServiceImpl;
 import service.login.LoginServiceImpl;
 import service.register.RegisterServiceImpl;
+import service.token.TokenValidationServiceImpl;
 import utils.converter.RequestConverterImpl;
 
 import java.util.Arrays;
@@ -30,6 +33,7 @@ import java.util.Arrays;
         RegisterController.class, RegisterServiceImpl.class,
         CompanyController.class, CompanyServiceImpl.class,
         LoginController.class, LoginServiceImpl.class, TimeStampValidatorImpl.class,
+        UserItemsController.class, ItemServiceImpl.class, TokenValidationServiceImpl.class,
         RequestConverterImpl.class, EntityPropertyGeneratorImpl.class})
 
 @EnableJpaRepositories(basePackages = "repository", considerNestedRepositories = true)

@@ -1,6 +1,6 @@
 package service.login
 
-import model.workflow.response.LoginUserWebserviceResponse
+import workflow.model.workflow.response.LoginUserWebserviceResponse
 
 interface LoginService {
 

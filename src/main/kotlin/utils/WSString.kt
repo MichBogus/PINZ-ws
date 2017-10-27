@@ -18,6 +18,12 @@ enum class WSString(val tag: String) {
     COMPANY_GET_BY_CODE_INVALID("Company code is empty or invalid"),
 
     LOGIN_USER_DOES_NOT_EXISTS("User does not exists, try again"),
-    LOGIN_PASSWORD_IS_NOT_CORRECT("Password is wrong, try again")
+    LOGIN_PASSWORD_IS_NOT_CORRECT("Password is wrong, try again"),
+
+    USER_ITEM_ADD_NAME_INVALID("Item name is empty or invalid"),
+    USER_ITEM_ADD_DESCRIPTION_INVALID("Item description is empty or invalid"),
+    USER_ITEM_ADD_DATE_INVALID("Item date of addition is invalid"),
+
+    USER_ITEM_TOKEN_INVALID("Item token is empty or invalid")
 
 }

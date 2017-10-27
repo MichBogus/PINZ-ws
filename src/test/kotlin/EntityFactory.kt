@@ -1,10 +1,9 @@
-import model.company.CompanyAddress
-import model.entity.Company
-import model.entity.LoggedUser
-import model.entity.User
-import model.workflow.request.RegisterCompanyRequest
-import model.workflow.request.RegisterUserRequest
-import javax.jws.soap.SOAPBinding
+import workflow.model.company.CompanyAddress
+import workflow.model.entity.Company
+import workflow.model.entity.LoggedUser
+import workflow.model.entity.User
+import workflow.model.workflow.request.RegisterCompanyRequest
+import workflow.model.workflow.request.RegisterUserRequest
 
 object EntityFactory {
 

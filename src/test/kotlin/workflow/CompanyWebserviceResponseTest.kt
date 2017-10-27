@@ -1,8 +1,8 @@
 package workflow
 
-import model.base.WSCode
-import model.entity.Company
-import model.workflow.response.CompanyWebserviceResponse
+import workflow.model.base.WSCode
+import workflow.model.entity.Company
+import workflow.model.workflow.response.CompanyWebserviceResponse
 import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test

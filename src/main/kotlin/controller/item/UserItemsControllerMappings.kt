@@ -1,8 +1,11 @@
 package controller.item
 
 import controller.base.WSResponseEntity
-import model.workflow.request.LoginUserRequest
+import workflow.model.workflow.request.AddItemRequest
+import workflow.model.workflow.request.DeleteItemRequest
+import workflow.model.workflow.request.LoginUserRequest
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import javax.validation.Valid
@@ -13,29 +16,34 @@ interface UserItemsControllerMappings {
             method = arrayOf(RequestMethod.POST),
             consumes = arrayOf("application/json"),
             produces = arrayOf("application/json"))
-    fun addItem(@Valid @RequestBody request: LoginUserRequest): WSResponseEntity
+    fun addItem(@Valid @RequestHeader(value = "AUTH_TOKEN") authToken: String,
+                @Valid @RequestBody request: AddItemRequest): WSResponseEntity
 
     @RequestMapping(value = "/deleteItem",
             method = arrayOf(RequestMethod.POST),
             consumes = arrayOf("application/json"),
             produces = arrayOf("application/json"))
-    fun deleteItem(@Valid @RequestBody request: LoginUserRequest): WSResponseEntity
+    fun deleteItem(@Valid @RequestHeader(value = "AUTH_TOKEN") authToken: String,
+                   @Valid @RequestBody request: DeleteItemRequest): WSResponseEntity
 
     @RequestMapping(value = "/getAllCompanyItems",
             method = arrayOf(RequestMethod.POST),
             consumes = arrayOf("application/json"),
             produces = arrayOf("application/json"))
-    fun getCompanyItems(@Valid @RequestBody request: LoginUserRequest): WSResponseEntity
+    fun getCompanyItems(@Valid @RequestHeader(value = "AUTH_TOKEN") authToken: String,
+                        @Valid @RequestBody request: LoginUserRequest): WSResponseEntity
 
     @RequestMapping(value = "/getItemByToken",
             method = arrayOf(RequestMethod.POST),
             consumes = arrayOf("application/json"),
             produces = arrayOf("application/json"))
-    fun getItemByToken(@Valid @RequestBody request: LoginUserRequest): WSResponseEntity
+    fun getItemByToken(@Valid @RequestHeader(value = "AUTH_TOKEN") authToken: String,
+                       @Valid @RequestBody request: LoginUserRequest): WSResponseEntity
 
     @RequestMapping(value = "/getItemForUser",
             method = arrayOf(RequestMethod.POST),
             consumes = arrayOf("application/json"),
             produces = arrayOf("application/json"))
-    fun getItemForUser(@Valid @RequestBody request: LoginUserRequest): WSResponseEntity
+    fun getItemForUser(@Valid @RequestHeader(value = "AUTH_TOKEN") authToken: String,
+                       @Valid @RequestBody request: LoginUserRequest): WSResponseEntity
 }

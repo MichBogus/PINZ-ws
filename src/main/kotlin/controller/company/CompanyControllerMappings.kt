@@ -1,8 +1,7 @@
 package controller.company
 
 import controller.base.WSResponseEntity
-import model.workflow.request.CompanyGetByCodeRequest
-import model.workflow.response.CompanyWebserviceResponse
+import workflow.model.workflow.request.CompanyGetByCodeRequest
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod

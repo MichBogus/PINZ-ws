@@ -1,6 +1,6 @@
 package service.company
 
-import model.entity.Company
+import workflow.model.entity.Company
 
 interface CompanyService {
 
