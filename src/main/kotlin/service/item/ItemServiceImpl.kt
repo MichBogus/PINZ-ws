@@ -1,6 +1,7 @@
 package service.item
 
 import model.base.WSCode
+import model.entity.Item
 import model.entity.User
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -11,6 +12,7 @@ import utils.WSString
 import utils.converter.RequestConverter
 import workflow.request.AddItemRequest
 import workflow.response.AddItemWebserviceResponse
+import workflow.response.CompanyItemsWebserviceResponse
 import workflow.response.DeleteItemWebserviceResponse
 
 @Service
@@ -53,6 +55,15 @@ class ItemServiceImpl(private val userItemRepository: ItemRepository,
         return badRequestDeleteItemDoesNotExists()
     }
 
+    override fun getCompanyItems(authToken: String, companyCode: String): CompanyItemsWebserviceResponse {
+        val user = getUserByAuthToken(authToken)
+
+        if (user.companyCode != companyCode)
+            return badRequestUserTrysToGetItemsFromAnotherCompany()
+
+        return successCompanyItems(userItemRepository.findItemsByCompanyCode(companyCode))
+    }
+
     private fun getUserByAuthToken(authToken: String): User {
         val loggedUser = loggedUserRepository.findLoggedUserByAuthToken(authToken)
         return userRepository.findOne(loggedUser?.id)
@@ -81,4 +92,18 @@ class ItemServiceImpl(private val userItemRepository: ItemRepository,
                     WSCode.ERROR_DB_ITEM_EXISTS_IN_SYSTEM,
                     WSCode.ERROR_DB_ITEM_EXISTS_IN_SYSTEM.code,
                     WSString.USER_ITEM_DOES_NOT_EXISTS.tag)
+
+    private fun successCompanyItems(items: Iterable<Item>?) =
+            CompanyItemsWebserviceResponse(HttpStatus.OK,
+                    WSCode.OK,
+                    WSCode.OK.code,
+                    "").apply {
+                this.items = items
+            }
+
+    private fun badRequestUserTrysToGetItemsFromAnotherCompany() =
+            CompanyItemsWebserviceResponse(HttpStatus.BAD_REQUEST,
+                    WSCode.ERROR_WRONG_FIELD,
+                    WSCode.ERROR_WRONG_FIELD.code,
+                    WSString.USER_ITEM_COMPANY_ITEMS_WRONG_USER.tag)
 }

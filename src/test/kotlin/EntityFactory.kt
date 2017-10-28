@@ -60,4 +60,22 @@ object EntityFactory {
                     description = "testDescription",
                     userSignedToItemId = userId,
                     itemToken = "testToken")
+
+    fun itemsForCode(companyCode: String, userId: Long) = listOf(
+            Item(name = "testName",
+                    dateOfAddition = "testDate",
+                    description = "testDescription",
+                    companyCode = companyCode,
+                    userSignedToItemId = userId,
+                    itemToken = "testToken"),
+            Item(name = "testName",
+                    dateOfAddition = "testDate",
+                    description = "testDescription",
+                    userSignedToItemId = userId,
+                    itemToken = "testToken"),
+            Item(name = "testName",
+                    dateOfAddition = "testDate",
+                    description = "testDescription",
+                    userSignedToItemId = userId,
+                    itemToken = "testToken"))
 }

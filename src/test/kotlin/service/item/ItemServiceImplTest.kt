@@ -15,6 +15,7 @@ import repository.UserRepository
 import utils.WSString
 import utils.converter.RequestConverter
 import workflow.response.AddItemWebserviceResponse
+import workflow.response.CompanyItemsWebserviceResponse
 import workflow.response.DeleteItemWebserviceResponse
 
 class ItemServiceImplTest {
@@ -91,7 +92,44 @@ class ItemServiceImplTest {
 
     @Test
     fun shouldReturnProperResponseWhenItemDoesNotExistsForDelete() {
+        val expectedResponse = DeleteItemWebserviceResponse(HttpStatus.BAD_REQUEST,
+                WSCode.ERROR_DB_ITEM_EXISTS_IN_SYSTEM,
+                WSCode.ERROR_DB_ITEM_EXISTS_IN_SYSTEM.code,
+                WSString.USER_ITEM_DOES_NOT_EXISTS.tag)
 
+        val response = systemUnderTest.deleteItem("TOKEN", "itemToken")
+
+        responsesAreEqual(response, expectedResponse)
+    }
+
+    @Test
+    fun shouldReturnItemsForCode() {
+        whenever(mockOfItemsRepository.findItemsByCompanyCode("testCode")).thenReturn(EntityFactory.itemsForCode("testCode", 1))
+
+        val expectedResponse = CompanyItemsWebserviceResponse(HttpStatus.OK,
+                WSCode.OK,
+                WSCode.OK.code,
+                "").apply {
+            items = EntityFactory.itemsForCode("testCode", 1)
+        }
+
+        val response = systemUnderTest.getCompanyItems("TOKEN", "testCode")
+
+        responsesAreEqual(response, expectedResponse)
+    }
+
+    @Test
+    fun shouldReturnBadRequestForAnotherCompanyItems() {
+        whenever(mockOfItemsRepository.findItemsByCompanyCode("testCode")).thenReturn(EntityFactory.itemsForCode("testCode", 1))
+
+        val expectedResponse = CompanyItemsWebserviceResponse(HttpStatus.BAD_REQUEST,
+                WSCode.ERROR_WRONG_FIELD,
+                WSCode.ERROR_WRONG_FIELD.code,
+                WSString.USER_ITEM_COMPANY_ITEMS_WRONG_USER.tag)
+
+        val response = systemUnderTest.getCompanyItems("TOKEN", "test")
+
+        responsesAreEqualWithNullValue(response, expectedResponse)
     }
 
     private fun itemsAreEqual(item: Item, expectedUser: Item) {
@@ -115,5 +153,21 @@ class ItemServiceImplTest {
         Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
         Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
         Assertions.assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
+    }
+
+    private fun responsesAreEqual(response: CompanyItemsWebserviceResponse, expectedResponse: CompanyItemsWebserviceResponse) {
+        Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
+        Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
+        Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
+        Assertions.assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
+        Assertions.assertThat(response.items).isNotEmpty.hasSize(expectedResponse.items!!.count())
+    }
+
+    private fun responsesAreEqualWithNullValue(response: CompanyItemsWebserviceResponse, expectedResponse: CompanyItemsWebserviceResponse) {
+        Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
+        Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
+        Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
+        Assertions.assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
+        Assertions.assertThat(response.items).isNull()
     }
 }

@@ -30,6 +30,7 @@ enum class WSString(val tag: String) {
     USER_ITEM_TOKEN_INVALID("Item token is empty or invalid"),
     USER_ITEM_EXISTS("Item already exists in the system (check token)"),
     USER_ITEM_DOES_NOT_EXISTS("Item does not exists"),
-    USER_ITEM_DELETE_FOR_WRONG_USER("You are trying to delete another user item")
+    USER_ITEM_DELETE_FOR_WRONG_USER("You are trying to delete another user item"),
+    USER_ITEM_COMPANY_ITEMS_WRONG_USER("You are not able to get that resource")
 
 }

@@ -61,7 +61,8 @@ class UserItemsController(val itemService: ItemService,
         var response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {
-
+            response = itemService.getCompanyItems(authToken, request.companyCode)
+            return generateResponseEntity(response, response.status)
         }
 
         return generateResponseEntity(response, response.status)
