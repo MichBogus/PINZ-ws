@@ -1,10 +1,12 @@
 package utils.converter
 
 import model.entity.Company
+import model.entity.Item
 import model.entity.User
+import org.springframework.stereotype.Service
+import workflow.request.AddItemRequest
 import workflow.request.RegisterCompanyRequest
 import workflow.request.RegisterUserRequest
-import org.springframework.stereotype.Service
 
 @Service
 class RequestConverterImpl : RequestConverter {
@@ -24,4 +26,10 @@ class RequestConverterImpl : RequestConverter {
                     streetNumber = request.address.streetNumber,
                     city = request.address.city,
                     companyNip = request.companyNip)
+
+    override fun convertAddItemRequestToEntity(request: AddItemRequest): Item =
+            Item(name = request.name,
+                    dateOfAddition = request.dateOfAddition,
+                    description = request.description,
+                    itemToken = request.itemToken)
 }

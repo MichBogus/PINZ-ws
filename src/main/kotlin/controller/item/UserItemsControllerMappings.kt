@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import workflow.request.CompanyCodeItemsRequest
 import javax.validation.Valid
 
 interface UserItemsControllerMappings {
@@ -31,7 +32,7 @@ interface UserItemsControllerMappings {
             consumes = arrayOf("application/json"),
             produces = arrayOf("application/json"))
     fun getCompanyItems(@Valid @RequestHeader(value = "AUTH_TOKEN") authToken: String,
-                        @Valid @RequestBody request: LoginUserRequest): WSResponseEntity
+                        @Valid @RequestBody request: CompanyCodeItemsRequest): WSResponseEntity
 
     @RequestMapping(value = "/getItemByToken",
             method = arrayOf(RequestMethod.POST),

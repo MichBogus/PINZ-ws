@@ -24,11 +24,11 @@ jar {
 }
 
 bootRepackage {
-    mainClass = 'application.RestApplication'
+    mainClass = '.RestApplication'
 }
 
 springBoot {
-    mainClass = 'application.RestApplication'
+    mainClass = '.RestApplication'
 }
 
 repositories {

@@ -2,5 +2,5 @@ package service.token
 
 interface TokenValidationService {
 
-    fun validate(token: String): Boolean
+    fun validateAndUpdate(token: String): Boolean
 }

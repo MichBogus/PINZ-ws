@@ -30,6 +30,7 @@ class RegisterServiceImplTest {
         val expectedRequest = EntityFactory.registerUserRequest
 
         whenever(mockOfUserRepository.findUserByUsername(any())).thenReturn(null)
+        whenever(mockOfCompanyRepository.findByCompanyCode(any())).thenReturn(EntityFactory.company)
         whenever(mockOfRequestConverter.convertRegisterUserRequestToEntity(expectedRequest)).thenReturn(expectedUser)
 
         val userRegistered = systemUnderTest.registerUser(expectedRequest)
@@ -37,6 +38,21 @@ class RegisterServiceImplTest {
         verify(mockOfRequestConverter).convertRegisterUserRequestToEntity(expectedRequest)
         verify(mockOfUserRepository).save(expectedUser)
         Assertions.assertThat(userRegistered).isTrue()
+    }
+
+    @Test
+    fun shouldNotRegisterUserWhenThereIsNoCompany() {
+        val expectedUser = EntityFactory.user
+        val expectedRequest = EntityFactory.registerUserRequest
+
+        whenever(mockOfUserRepository.findUserByUsername(any())).thenReturn(null)
+        whenever(mockOfRequestConverter.convertRegisterUserRequestToEntity(expectedRequest)).thenReturn(expectedUser)
+
+        val userRegistered = systemUnderTest.registerUser(expectedRequest)
+
+        verify(mockOfRequestConverter).convertRegisterUserRequestToEntity(expectedRequest)
+        verify(mockOfUserRepository, never()).save(expectedUser)
+        Assertions.assertThat(userRegistered).isFalse()
     }
 
     @Test

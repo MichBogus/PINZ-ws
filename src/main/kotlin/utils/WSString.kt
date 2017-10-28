@@ -2,8 +2,10 @@ package utils
 
 enum class WSString(val tag: String) {
 
+    AUTH_TOKEN_INVALID("TOKEN IS INVALID"),
+
     GENERIC_DB_NON_EXISTING_ITEM("There is no such element in the database"),
-    GENERIC_DB_USER_EXISTS("There is another user with such username in the database"),
+    GENERIC_DB_USER_EXISTS("There is another user with such username in the database or there is no such company in the database"),
 
     REGISTER_USER_USERNAME_INVALID("Username is empty or invalid"),
     REGISTER_USER_PASSWORD_INVALID("Password is empty or invalid (it should contains at least one number and minimum of 8 chars)"),
@@ -25,6 +27,7 @@ enum class WSString(val tag: String) {
     USER_ITEM_ADD_DESCRIPTION_INVALID("Item description is empty or invalid"),
     USER_ITEM_ADD_DATE_INVALID("Item date of addition is invalid"),
 
-    USER_ITEM_TOKEN_INVALID("Item token is empty or invalid")
+    USER_ITEM_TOKEN_INVALID("Item token is empty or invalid"),
+    USER_ITEM_EXISTS("Item already exists in the system (check token)")
 
 }

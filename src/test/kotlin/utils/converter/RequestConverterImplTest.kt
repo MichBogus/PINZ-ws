@@ -1,11 +1,14 @@
 package utils.converter
 
-import workflow.request.RegisterUserRequest
+import EntityFactory
+import model.company.CompanyAddress
 import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test
+import workflow.request.RegisterCompanyRequest
+import workflow.request.RegisterUserRequest
 
-class RequestConverterImplTest{
+class RequestConverterImplTest {
 
     lateinit var systemUnderTest: RequestConverterImpl
 
@@ -27,5 +30,20 @@ class RequestConverterImplTest{
         Assertions.assertThat(convertedUser.username).isEqualTo(expectedUser.username)
         Assertions.assertThat(convertedUser.password).isEqualTo(expectedUser.password)
         Assertions.assertThat(convertedUser.companyCode).isEqualTo(expectedUser.companyCode)
+    }
+
+    @Test
+    fun shouldReturnProperCompanyEntity() {
+        val expectedCompany = EntityFactory.company
+
+        val registerRequest = RegisterCompanyRequest("test", CompanyAddress("testStreet", "testStreetNumber", "testCity"), "testNip")
+
+        val convertedCompany = systemUnderTest.convertRegisterCompanyRequestToEntity(registerRequest)
+
+        Assertions.assertThat(convertedCompany.name).isEqualTo(expectedCompany.name)
+        Assertions.assertThat(convertedCompany.city).isEqualTo(expectedCompany.city)
+        Assertions.assertThat(convertedCompany.companyNip).isEqualTo(expectedCompany.companyNip)
+        Assertions.assertThat(convertedCompany.street).isEqualTo(expectedCompany.street)
+        Assertions.assertThat(convertedCompany.streetNumber).isEqualTo(expectedCompany.streetNumber)
     }
 }

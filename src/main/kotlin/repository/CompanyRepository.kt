@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository
 interface CompanyRepository : CrudRepository<Company, Long> {
 
     @Query("SELECT c FROM Company c WHERE c.companyCode = :#{#companyCode}")
-    fun findByCompanyCode(@Param("companyCode") companyCode: String): Company
+    fun findByCompanyCode(@Param("companyCode") companyCode: String): Company?
 }

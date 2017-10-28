@@ -13,6 +13,6 @@ class TokenValidationServiceImplTest() {
 
     @Before
     fun setUp() {
-        systemUnderTest = TokenValidationServiceImpl(mockOfLoggedUserRepository, mockOfTimeStampValidator)
+        systemUnderTest = TokenValidationServiceImpl(mockOfLoggedUserRepository, mockOfTimeStampValidator, mock())
     }
 }

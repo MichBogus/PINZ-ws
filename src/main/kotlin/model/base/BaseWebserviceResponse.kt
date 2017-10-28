@@ -13,6 +13,8 @@ open class BaseWebserviceResponse(var status: HttpStatus,
 enum class WSCode(val code: String) {
     OK("200"),
 
+    AUTH_TOKEN_INVALID("000-00"),
+
     ERROR_WRONG_FIELD("100-01"),
     ERROR_MISSING_FIELD("100-02"),
 
