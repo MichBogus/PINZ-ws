@@ -13,10 +13,10 @@ import workflow.request.AddItemRequest
 import workflow.response.AddItemWebserviceResponse
 
 @Service
-class ItemServiceImpl(val userItemRepository: ItemRepository,
-                      val loggedUserRepository: LoggedUserRepository,
-                      val userRepository: UserRepository,
-                      val converter: RequestConverter) : ItemService {
+class ItemServiceImpl(private val userItemRepository: ItemRepository,
+                      private val loggedUserRepository: LoggedUserRepository,
+                      private val userRepository: UserRepository,
+                      private val converter: RequestConverter) : ItemService {
 
     override fun addItem(authToken: String, request: AddItemRequest): AddItemWebserviceResponse {
         val user = getUserByAuthToken(authToken)
@@ -28,7 +28,6 @@ class ItemServiceImpl(val userItemRepository: ItemRepository,
         itemToBeAdded.apply {
             companyCode = user.companyCode
             userSignedToItemId = user.id
-            itemToken = request.itemToken
         }
 
         userItemRepository.save(itemToBeAdded)

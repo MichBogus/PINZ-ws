@@ -1,7 +1,9 @@
 import model.company.CompanyAddress
 import model.entity.Company
+import model.entity.Item
 import model.entity.LoggedUser
 import model.entity.User
+import workflow.request.AddItemRequest
 import workflow.request.RegisterCompanyRequest
 import workflow.request.RegisterUserRequest
 
@@ -40,4 +42,14 @@ object EntityFactory {
     val registerCompanyRequest = RegisterCompanyRequest("test",
             CompanyAddress("testStreet", "testStreetNumber", "testCity"),
             "testNip")
+
+    val addItemRequest = AddItemRequest("test",
+            "testDescription",
+            "testDate",
+            "testToken")
+
+    val item = Item(name = "testName",
+            dateOfAddition = "testDate",
+            description = "testDescription",
+            itemToken = "testToken")
 }
