@@ -51,5 +51,13 @@ object EntityFactory {
     val item = Item(name = "testName",
             dateOfAddition = "testDate",
             description = "testDescription",
+            userSignedToItemId = 1,
             itemToken = "testToken")
+
+    fun itemForCertainUserId(userId: Long) =
+            Item(name = "testName",
+                    dateOfAddition = "testDate",
+                    description = "testDescription",
+                    userSignedToItemId = userId,
+                    itemToken = "testToken")
 }

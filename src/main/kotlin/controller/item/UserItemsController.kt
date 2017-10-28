@@ -46,7 +46,8 @@ class UserItemsController(val itemService: ItemService,
         var response = request.checkIfRequestIsValid()
 
         if (response.isOk()) {
-
+            response = itemService.deleteItem(authToken, request.itemToken)
+            return generateResponseEntity(response, response.status)
         }
 
         return generateResponseEntity(response, response.status)

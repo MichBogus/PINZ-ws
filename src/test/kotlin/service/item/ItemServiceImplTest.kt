@@ -15,6 +15,7 @@ import repository.UserRepository
 import utils.WSString
 import utils.converter.RequestConverter
 import workflow.response.AddItemWebserviceResponse
+import workflow.response.DeleteItemWebserviceResponse
 
 class ItemServiceImplTest {
 
@@ -63,6 +64,36 @@ class ItemServiceImplTest {
         itemsAreEqual(argument.firstValue, expectedUser)
     }
 
+    @Test
+    fun shouldDeleteItem() {
+        whenever(mockOfItemsRepository.findItemByToken("itemToken")).thenReturn(EntityFactory.item)
+
+        val expectedResponse = DeleteItemWebserviceResponse(HttpStatus.OK, WSCode.OK, WSCode.OK.code, "")
+
+        val response = systemUnderTest.deleteItem("TEST", "itemToken")
+
+        responsesAreEqual(response, expectedResponse)
+    }
+
+    @Test
+    fun shouldReturnProperResponseWhenTryingToDeleteOtherUserItem() {
+        whenever(mockOfItemsRepository.findItemByToken("itemToken")).thenReturn(EntityFactory.itemForCertainUserId(2))
+
+        val expectedResponse = DeleteItemWebserviceResponse(HttpStatus.BAD_REQUEST,
+                WSCode.ERROR_WRONG_FIELD,
+                WSCode.ERROR_WRONG_FIELD.code,
+                WSString.USER_ITEM_DELETE_FOR_WRONG_USER.tag)
+
+        val response = systemUnderTest.deleteItem("TOKEN", "itemToken")
+
+        responsesAreEqual(response, expectedResponse)
+    }
+
+    @Test
+    fun shouldReturnProperResponseWhenItemDoesNotExistsForDelete() {
+
+    }
+
     private fun itemsAreEqual(item: Item, expectedUser: Item) {
         Assertions.assertThat(item.companyCode).isEqualTo(expectedUser.companyCode)
         Assertions.assertThat(item.dateOfAddition).isEqualTo(expectedUser.dateOfAddition)
@@ -73,6 +104,13 @@ class ItemServiceImplTest {
     }
 
     private fun responsesAreEqual(response: AddItemWebserviceResponse, expectedResponse: AddItemWebserviceResponse) {
+        Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
+        Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
+        Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
+        Assertions.assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
+    }
+
+    private fun responsesAreEqual(response: DeleteItemWebserviceResponse, expectedResponse: DeleteItemWebserviceResponse) {
         Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
         Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
         Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
