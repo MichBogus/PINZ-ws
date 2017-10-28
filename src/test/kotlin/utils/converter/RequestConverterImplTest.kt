@@ -1,7 +1,7 @@
 package utils.converter
 
 import EntityFactory
-import model.company.CompanyAddress
+import model.entity.CompanyAddress
 import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test

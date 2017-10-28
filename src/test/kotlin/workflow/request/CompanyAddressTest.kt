@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import model.company.CompanyAddress
+import model.entity.CompanyAddress
 
 @RunWith(Parameterized::class)
 class CompanyAddressTest(val expectedValidation: Boolean,

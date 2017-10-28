@@ -1,4 +1,4 @@
-import model.company.CompanyAddress
+import model.entity.CompanyAddress
 import model.entity.Company
 import model.entity.Item
 import model.entity.LoggedUser

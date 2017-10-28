@@ -1,4 +1,4 @@
-package model.company
+package model.entity
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import model.base.BaseModel

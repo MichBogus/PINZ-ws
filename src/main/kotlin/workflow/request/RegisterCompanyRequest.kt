@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import model.base.BaseRequest
 import model.base.BaseWebserviceResponse
 import model.base.WSCode
-import model.company.CompanyAddress
+import model.entity.CompanyAddress
 import org.jetbrains.annotations.NotNull
 import org.springframework.http.HttpStatus
 import utils.WSString
