@@ -2,6 +2,7 @@ package service.item
 
 import EntityFactory
 import com.nhaarman.mockito_kotlin.*
+import model.base.BaseWebserviceResponse
 import model.base.WSCode
 import model.entity.Item
 import org.assertj.core.api.Assertions
@@ -12,19 +13,25 @@ import org.springframework.http.HttpStatus
 import repository.ItemRepository
 import repository.LoggedUserRepository
 import repository.UserRepository
+import service.item.ItemServiceResponses.badRequestItemForAnotherCompany
+import service.item.ItemServiceResponses.badRequestUserTriesToGetItemsFromAnotherCompany
+import service.item.ItemServiceResponses.successCompanyItem
 import utils.WSString
 import utils.converter.RequestConverter
 import workflow.response.AddItemWebserviceResponse
-import workflow.response.CompanyItemsWebserviceResponse
+import workflow.response.ItemWebserviceResponse
+import workflow.response.ItemsWebserviceResponse
 import workflow.response.DeleteItemWebserviceResponse
 
 class ItemServiceImplTest {
 
     lateinit var systemUnderTest: ItemServiceImpl
-    val mockOfItemsRepository: ItemRepository = mock()
-    val mockOfLoggedUserRepository: LoggedUserRepository = mock()
-    val mockOfUserRepository: UserRepository = mock()
-    val mockOfConverter: RequestConverter = mock()
+    private val mockOfItemsRepository: ItemRepository = mock()
+    private val mockOfLoggedUserRepository: LoggedUserRepository = mock()
+    private val mockOfUserRepository: UserRepository = mock()
+    private val mockOfConverter: RequestConverter = mock()
+
+    private val authToken = "TOKEN"
 
     @Before
     fun setUp() {
@@ -71,7 +78,7 @@ class ItemServiceImplTest {
 
         val expectedResponse = DeleteItemWebserviceResponse(HttpStatus.OK, WSCode.OK, WSCode.OK.code, "")
 
-        val response = systemUnderTest.deleteItem("TEST", "itemToken")
+        val response = systemUnderTest.deleteItem(authToken, "itemToken")
 
         responsesAreEqual(response, expectedResponse)
     }
@@ -85,7 +92,7 @@ class ItemServiceImplTest {
                 WSCode.ERROR_WRONG_FIELD.code,
                 WSString.USER_ITEM_DELETE_FOR_WRONG_USER.tag)
 
-        val response = systemUnderTest.deleteItem("TOKEN", "itemToken")
+        val response = systemUnderTest.deleteItem(authToken, "itemToken")
 
         responsesAreEqual(response, expectedResponse)
     }
@@ -97,7 +104,7 @@ class ItemServiceImplTest {
                 WSCode.ERROR_DB_ITEM_EXISTS_IN_SYSTEM.code,
                 WSString.USER_ITEM_DOES_NOT_EXISTS.tag)
 
-        val response = systemUnderTest.deleteItem("TOKEN", "itemToken")
+        val response = systemUnderTest.deleteItem(authToken, "itemToken")
 
         responsesAreEqual(response, expectedResponse)
     }
@@ -106,14 +113,14 @@ class ItemServiceImplTest {
     fun shouldReturnItemsForCode() {
         whenever(mockOfItemsRepository.findItemsByCompanyCode("testCode")).thenReturn(EntityFactory.itemsForCode("testCode", 1))
 
-        val expectedResponse = CompanyItemsWebserviceResponse(HttpStatus.OK,
+        val expectedResponse = ItemsWebserviceResponse(HttpStatus.OK,
                 WSCode.OK,
                 WSCode.OK.code,
                 "").apply {
             items = EntityFactory.itemsForCode("testCode", 1)
         }
 
-        val response = systemUnderTest.getCompanyItems("TOKEN", "testCode")
+        val response = systemUnderTest.getCompanyItems(authToken, "testCode")
 
         responsesAreEqual(response, expectedResponse)
     }
@@ -122,14 +129,34 @@ class ItemServiceImplTest {
     fun shouldReturnBadRequestForAnotherCompanyItems() {
         whenever(mockOfItemsRepository.findItemsByCompanyCode("testCode")).thenReturn(EntityFactory.itemsForCode("testCode", 1))
 
-        val expectedResponse = CompanyItemsWebserviceResponse(HttpStatus.BAD_REQUEST,
-                WSCode.ERROR_WRONG_FIELD,
-                WSCode.ERROR_WRONG_FIELD.code,
-                WSString.USER_ITEM_COMPANY_ITEMS_WRONG_USER.tag)
+        val expectedResponse = badRequestUserTriesToGetItemsFromAnotherCompany()
 
-        val response = systemUnderTest.getCompanyItems("TOKEN", "test")
+        val response = systemUnderTest.getCompanyItems(authToken, "test")
 
         responsesAreEqualWithNullValue(response, expectedResponse)
+    }
+
+    @Test
+    fun shouldReturnBadRequestForAnotherCompanyItem() {
+        whenever(mockOfItemsRepository.findItemByToken("testToken")).thenReturn(EntityFactory.itemForCertainCompanyCode("ANOTHER CODE"))
+
+        val expectedResponse = badRequestItemForAnotherCompany()
+
+        val response = systemUnderTest.getCompanyItemByToken(authToken, "testToken")
+
+        responsesAreEqualWithNullValue(response, expectedResponse)
+    }
+
+    @Test
+    fun shouldReturnItemForCertainToken() {
+        val expectedItem = EntityFactory.itemForCertainCompanyCode("testCode")
+        whenever(mockOfItemsRepository.findItemByToken("testToken")).thenReturn(expectedItem)
+
+        val expectedResponse = successCompanyItem(expectedItem)
+
+        val response = systemUnderTest.getCompanyItemByToken(authToken, "testToken")
+
+        responsesAreEqual(response, expectedResponse)
     }
 
     private fun itemsAreEqual(item: Item, expectedUser: Item) {
@@ -141,21 +168,14 @@ class ItemServiceImplTest {
         Assertions.assertThat(item.userSignedToItemId).isEqualTo(expectedUser.userSignedToItemId)
     }
 
-    private fun responsesAreEqual(response: AddItemWebserviceResponse, expectedResponse: AddItemWebserviceResponse) {
+    private fun responsesAreEqual(response: BaseWebserviceResponse, expectedResponse: BaseWebserviceResponse) {
         Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
         Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
         Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
         Assertions.assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
     }
 
-    private fun responsesAreEqual(response: DeleteItemWebserviceResponse, expectedResponse: DeleteItemWebserviceResponse) {
-        Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
-        Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
-        Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
-        Assertions.assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
-    }
-
-    private fun responsesAreEqual(response: CompanyItemsWebserviceResponse, expectedResponse: CompanyItemsWebserviceResponse) {
+    private fun responsesAreEqual(response: ItemsWebserviceResponse, expectedResponse: ItemsWebserviceResponse) {
         Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
         Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
         Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
@@ -163,11 +183,27 @@ class ItemServiceImplTest {
         Assertions.assertThat(response.items).isNotEmpty.hasSize(expectedResponse.items!!.count())
     }
 
-    private fun responsesAreEqualWithNullValue(response: CompanyItemsWebserviceResponse, expectedResponse: CompanyItemsWebserviceResponse) {
+    private fun responsesAreEqualWithNullValue(response: ItemsWebserviceResponse, expectedResponse: ItemsWebserviceResponse) {
         Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
         Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
         Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
         Assertions.assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
         Assertions.assertThat(response.items).isNull()
+    }
+
+    private fun responsesAreEqual(response: ItemWebserviceResponse, expectedResponse: ItemWebserviceResponse) {
+        Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
+        Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
+        Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
+        Assertions.assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
+        Assertions.assertThat(response.item).isEqualTo(expectedResponse.item)
+    }
+
+    private fun responsesAreEqualWithNullValue(response: ItemWebserviceResponse, expectedResponse: ItemWebserviceResponse) {
+        Assertions.assertThat(response.reason).isEqualTo(expectedResponse.reason)
+        Assertions.assertThat(response.status).isEqualTo(expectedResponse.status)
+        Assertions.assertThat(response.wsCodeValue).isEqualTo(expectedResponse.wsCodeValue)
+        Assertions.assertThat(response.wsCode).isEqualTo(expectedResponse.wsCode)
+        Assertions.assertThat(response.item).isNull()
     }
 }

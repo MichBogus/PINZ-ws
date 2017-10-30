@@ -1,18 +1,25 @@
 package service.item
 
-import model.base.WSCode
-import model.entity.Item
 import model.entity.User
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import repository.ItemRepository
 import repository.LoggedUserRepository
 import repository.UserRepository
-import utils.WSString
+import service.item.ItemServiceResponses.badRequestAddItemThatExists
+import service.item.ItemServiceResponses.badRequestDeleteItemDoesNotExists
+import service.item.ItemServiceResponses.badRequestDeleteItemForAnotherUser
+import service.item.ItemServiceResponses.badRequestItemDoesNotExists
+import service.item.ItemServiceResponses.badRequestItemForAnotherCompany
+import service.item.ItemServiceResponses.badRequestUserTriesToGetItemsFromAnotherCompany
+import service.item.ItemServiceResponses.successAddItemResponse
+import service.item.ItemServiceResponses.successCompanyItem
+import service.item.ItemServiceResponses.successCompanyItems
+import service.item.ItemServiceResponses.successDeleteItemResponse
 import utils.converter.RequestConverter
 import workflow.request.AddItemRequest
 import workflow.response.AddItemWebserviceResponse
-import workflow.response.CompanyItemsWebserviceResponse
+import workflow.response.ItemWebserviceResponse
+import workflow.response.ItemsWebserviceResponse
 import workflow.response.DeleteItemWebserviceResponse
 
 @Service
@@ -39,15 +46,12 @@ class ItemServiceImpl(private val userItemRepository: ItemRepository,
     }
 
     override fun deleteItem(authToken: String, itemToken: String): DeleteItemWebserviceResponse {
-        val user = getUserByAuthToken(authToken)
-        val itemToBeDeleted = userItemRepository.findItemByToken(itemToken)
-
-        itemToBeDeleted?.let {
-            if (it.userSignedToItemId != user.id) {
+        userItemRepository.findItemByToken(itemToken)?.let {
+            if (it.userSignedToItemId != getUserByAuthToken(authToken).id) {
                 return badRequestDeleteItemForAnotherUser()
             }
 
-            userItemRepository.delete(itemToBeDeleted)
+            userItemRepository.delete(it)
 
             return successDeleteItemResponse()
         }
@@ -55,55 +59,31 @@ class ItemServiceImpl(private val userItemRepository: ItemRepository,
         return badRequestDeleteItemDoesNotExists()
     }
 
-    override fun getCompanyItems(authToken: String, companyCode: String): CompanyItemsWebserviceResponse {
-        val user = getUserByAuthToken(authToken)
-
-        if (user.companyCode != companyCode)
-            return badRequestUserTrysToGetItemsFromAnotherCompany()
+    override fun getCompanyItems(authToken: String, companyCode: String): ItemsWebserviceResponse {
+        if (getUserByAuthToken(authToken).companyCode != companyCode)
+            return badRequestUserTriesToGetItemsFromAnotherCompany()
 
         return successCompanyItems(userItemRepository.findItemsByCompanyCode(companyCode))
+    }
+
+    override fun getCompanyItemByToken(authToken: String, itemToken: String): ItemWebserviceResponse {
+        userItemRepository.findItemByToken(itemToken)?.let {
+            return if (it.companyCode != getUserByAuthToken(authToken).companyCode) {
+                badRequestItemForAnotherCompany()
+            } else {
+                successCompanyItem(it)
+            }
+        }
+
+        return badRequestItemDoesNotExists()
+    }
+
+    override fun getUserItems(authToken: String): ItemsWebserviceResponse {
+        return successCompanyItems(userItemRepository.findItemsByUserId(getUserByAuthToken(authToken).id))
     }
 
     private fun getUserByAuthToken(authToken: String): User {
         val loggedUser = loggedUserRepository.findLoggedUserByAuthToken(authToken)
         return userRepository.findOne(loggedUser?.id)
     }
-
-    private fun successAddItemResponse() =
-            AddItemWebserviceResponse(HttpStatus.OK, WSCode.OK, WSCode.OK.code, "")
-
-    private fun badRequestAddItemThatExists() =
-            AddItemWebserviceResponse(HttpStatus.BAD_REQUEST,
-                    WSCode.ERROR_DB_ITEM_EXISTS_IN_SYSTEM,
-                    WSCode.ERROR_DB_ITEM_EXISTS_IN_SYSTEM.code,
-                    WSString.USER_ITEM_EXISTS.tag)
-
-    private fun successDeleteItemResponse() =
-            DeleteItemWebserviceResponse(HttpStatus.OK, WSCode.OK, WSCode.OK.code, "")
-
-    private fun badRequestDeleteItemForAnotherUser() =
-            DeleteItemWebserviceResponse(HttpStatus.BAD_REQUEST,
-                    WSCode.ERROR_WRONG_FIELD,
-                    WSCode.ERROR_WRONG_FIELD.code,
-                    WSString.USER_ITEM_DELETE_FOR_WRONG_USER.tag)
-
-    private fun badRequestDeleteItemDoesNotExists() =
-            DeleteItemWebserviceResponse(HttpStatus.BAD_REQUEST,
-                    WSCode.ERROR_DB_ITEM_EXISTS_IN_SYSTEM,
-                    WSCode.ERROR_DB_ITEM_EXISTS_IN_SYSTEM.code,
-                    WSString.USER_ITEM_DOES_NOT_EXISTS.tag)
-
-    private fun successCompanyItems(items: Iterable<Item>?) =
-            CompanyItemsWebserviceResponse(HttpStatus.OK,
-                    WSCode.OK,
-                    WSCode.OK.code,
-                    "").apply {
-                this.items = items
-            }
-
-    private fun badRequestUserTrysToGetItemsFromAnotherCompany() =
-            CompanyItemsWebserviceResponse(HttpStatus.BAD_REQUEST,
-                    WSCode.ERROR_WRONG_FIELD,
-                    WSCode.ERROR_WRONG_FIELD.code,
-                    WSString.USER_ITEM_COMPANY_ITEMS_WRONG_USER.tag)
 }

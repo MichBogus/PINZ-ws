@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 import service.item.ItemService
 import service.token.TokenValidationService
 import utils.WSString
-import workflow.request.AddItemRequest
-import workflow.request.CompanyCodeItemsRequest
-import workflow.request.DeleteItemRequest
-import workflow.request.LoginUserRequest
+import workflow.request.*
 import javax.validation.Valid
 
 @RestController
@@ -69,13 +66,23 @@ class UserItemsController(val itemService: ItemService,
     }
 
     override fun getItemByToken(@Valid @RequestHeader(value = "AUTH_TOKEN") authToken: String,
-                                request: LoginUserRequest): WSResponseEntity {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                @Valid @RequestBody request: ItemTokenRequest): WSResponseEntity {
+        if (tokenValidationService.validateAndUpdate(authToken).not())
+            return authTokenInvalid()
+
+        var response = request.checkIfRequestIsValid()
+
+        if (response.isOk()) {
+            response = itemService.getCompanyItemByToken(authToken, request.itemToken)
+            return generateResponseEntity(response, response.status)
+        }
+
+        return generateResponseEntity(response, response.status)
     }
 
-    override fun getItemForUser(@Valid @RequestHeader(value = "AUTH_TOKEN") authToken: String,
-                                request: LoginUserRequest): WSResponseEntity {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getUserItems(@Valid @RequestHeader(value = "AUTH_TOKEN") authToken: String): WSResponseEntity {
+        val response = itemService.getUserItems(authToken)
+        return generateResponseEntity(response, response.status)
     }
 
     private fun authTokenInvalid(): WSResponseEntity =
