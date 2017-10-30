@@ -13,15 +13,16 @@ import org.springframework.http.HttpStatus
 import repository.ItemRepository
 import repository.LoggedUserRepository
 import repository.UserRepository
+import service.item.ItemServiceResponses.badRequestItemDoesNotExists
 import service.item.ItemServiceResponses.badRequestItemForAnotherCompany
 import service.item.ItemServiceResponses.badRequestUserTriesToGetItemsFromAnotherCompany
 import service.item.ItemServiceResponses.successCompanyItem
 import utils.WSString
 import utils.converter.RequestConverter
 import workflow.response.AddItemWebserviceResponse
+import workflow.response.DeleteItemWebserviceResponse
 import workflow.response.ItemWebserviceResponse
 import workflow.response.ItemsWebserviceResponse
-import workflow.response.DeleteItemWebserviceResponse
 
 class ItemServiceImplTest {
 
@@ -157,6 +158,15 @@ class ItemServiceImplTest {
         val response = systemUnderTest.getCompanyItemByToken(authToken, "testToken")
 
         responsesAreEqual(response, expectedResponse)
+    }
+
+    @Test
+    fun shouldReturnBadRequestWhenItemDoesNotExists() {
+        val expectedResponse = badRequestItemDoesNotExists()
+
+        val response = systemUnderTest.getCompanyItemByToken(authToken, "testToken")
+
+        responsesAreEqualWithNullValue(response, expectedResponse)
     }
 
     private fun itemsAreEqual(item: Item, expectedUser: Item) {

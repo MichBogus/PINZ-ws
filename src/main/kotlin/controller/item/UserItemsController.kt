@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController
 import service.item.ItemService
 import service.token.TokenValidationService
 import utils.WSString
-import workflow.request.*
+import workflow.request.AddItemRequest
+import workflow.request.CompanyCodeItemsRequest
+import workflow.request.DeleteItemRequest
+import workflow.request.ItemTokenRequest
 import javax.validation.Valid
 
 @RestController
@@ -86,5 +89,8 @@ class UserItemsController(val itemService: ItemService,
     }
 
     private fun authTokenInvalid(): WSResponseEntity =
-            generateResponseEntity(BaseWebserviceResponse(HttpStatus.FORBIDDEN, WSCode.AUTH_TOKEN_INVALID, WSCode.AUTH_TOKEN_INVALID.code, WSString.AUTH_TOKEN_INVALID.tag), HttpStatus.FORBIDDEN)
+            generateResponseEntity(BaseWebserviceResponse(HttpStatus.FORBIDDEN,
+                    WSCode.AUTH_TOKEN_INVALID,
+                    WSCode.AUTH_TOKEN_INVALID.code,
+                    WSString.AUTH_TOKEN_INVALID.tag), HttpStatus.FORBIDDEN)
 }
