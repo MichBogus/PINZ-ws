@@ -27,9 +27,10 @@ class RegisterServiceImpl(val userRepository: UserRepository,
         return true
     }
 
-    override fun registerCompany(request: RegisterCompanyRequest) {
+    override fun registerCompany(request: RegisterCompanyRequest): String {
         val convertedCompany = converter.convertRegisterCompanyRequestToEntity(request)
         convertedCompany.companyCode = entityPropertyGenerator.generateCompanyCode()
         companyRepository.save(convertedCompany)
+        return convertedCompany.companyCode
     }
 }
