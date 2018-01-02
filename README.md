@@ -6,7 +6,7 @@ Develop: ![Develop status](https://travis-ci.org/MichBogus/PINZ-ws.svg?branch=de
 
 # Documentation
 
-Postman documentation: [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/7839310143f0ebbd784e) <br/>
+Postman documentation: [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/12a590e6363126b6bf49) <br/>
 
 # PINZ-ws
 
